@@ -6,13 +6,13 @@ function Cell() {
         value = player;
     };
 
-    const getValue = () => value; 
+    const getValue = () => value;
 
-    return {addItem, getValue}
+    return { addItem, getValue }
 
 };
 
-const Gameboard = (function (){
+const Gameboard = (function () {
     const rows = 3;
     const columns = 3;
     const board = [];
@@ -21,15 +21,15 @@ const Gameboard = (function (){
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
-          board[i].push(Cell());
+            board[i].push(Cell());
         };
-    };  
+    };
 
     const getBoard = () => board;
 
-    const updateBoard = (row,column,player) => {
+    const updateBoard = (row, column, player) => {
 
-        if (board[row][column].getValue() === 0){
+        if (board[row][column].getValue() === 0) {
             board[row][column].addItem(player);
         } else {
             return;
@@ -38,7 +38,7 @@ const Gameboard = (function (){
     };
 
     const printBoard = () => {
-            
+
         const boardCellValues = board.map((row) => row.map((cell) => cell.getValue()));
 
         console.log(boardCellValues);
@@ -46,7 +46,7 @@ const Gameboard = (function (){
 
     };
 
-    return {getBoard,updateBoard,printBoard};
+    return { getBoard, updateBoard, printBoard };
 
 })();
 
@@ -76,7 +76,7 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
-    const updatePlayersNames = (player1,player2) => {
+    const updatePlayersNames = (player1, player2) => {
 
         players[0].name = player1;
         players[1].name = player2;
@@ -101,12 +101,12 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
         let colCount = 0, rowCount = 0, diagCount = 0, aDiagCount = 0;
 
-        for(let i = 0; i < rows; i++){
+        for (let i = 0; i < rows; i++) {
 
             if (board.getBoard()[row][i].getValue() === getActivePlayer().item) rowCount++;
             if (board.getBoard()[i][column].getValue() === getActivePlayer().item) colCount++;
             if (board.getBoard()[i][i].getValue() === getActivePlayer().item) diagCount++;
-            if (board.getBoard()[i][rows-i-1].getValue() === getActivePlayer().item) aDiagCount++;
+            if (board.getBoard()[i][rows - i - 1].getValue() === getActivePlayer().item) aDiagCount++;
 
             if (rowCount === rows || colCount === rows || diagCount === rows || aDiagCount === rows) return true;
         };
@@ -116,29 +116,32 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     let roundPlayed = 0;
 
-    const playRound = (row,column) => {
-        console.log(`Adding ${getActivePlayer().name}'s item into ${row}, ${column}...`);
+    const playRound = (row, column) => {
 
-        board.updateBoard(row,column,getActivePlayer().item);
+        if (board.getBoard()[row][column].getValue() === 0) {
+            console.log(`Adding ${getActivePlayer().name}'s item into ${row}, ${column}...`);
 
-        roundPlayed++;
+            board.updateBoard(row, column, getActivePlayer().item);
 
-        if (checkWinner(row,column)){
+            roundPlayed++;
 
-            gameStatus = true;
+            if (checkWinner(row, column)) {
 
-            activePlayer.score += 1;
+                gameStatus = true;
 
-            console.log(`The winner is ${getActivePlayer().name} !`);
-            return
+                activePlayer.score += 1;
 
-        } else if (roundPlayed === 9){
+                console.log(`The winner is ${getActivePlayer().name} !`);
+                return
 
-            drawFlag = true;
+            } else if (roundPlayed === 9) {
 
-        } else {
-            switchPlayerTurn();
-            printNewRound();
+                drawFlag = true;
+
+            } else {
+                switchPlayerTurn();
+                printNewRound();
+            };
         };
     };
 
@@ -152,15 +155,17 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNewRound();
 
-    return {playRound,getActivePlayer,getBoard: board.getBoard, 
-        getGameStatus, updatePlayersNames, 
+    return {
+        playRound, getActivePlayer, getBoard: board.getBoard,
+        getGameStatus, updatePlayersNames,
         resetPlayersScores, resetGame,
-        getDrawFlag, getPlayers};
+        getDrawFlag, getPlayers
+    };
 
 };
 
 
-function ScreenController () {
+function ScreenController() {
 
     // Game handling 
     const game = GameController();
@@ -179,8 +184,8 @@ function ScreenController () {
 
         textContent.textContent = `${activePlayer.name}'s turn...`
 
-        board.forEach((row,indexRow) => {
-            row.forEach((cell,indexColumn) => {
+        board.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) => {
 
                 const cellButton = document.createElement("button");
                 cellButton.classList.add("cell");
@@ -189,7 +194,7 @@ function ScreenController () {
                 cellButton.dataset.row = indexRow;
                 cellButton.dataset.column = indexColumn;
 
-                if (cell.getValue() === 1){
+                if (cell.getValue() === 1) {
                     cellButton.textContent = "X";
                     cellButton.style.color = "red";
                 } else if (cell.getValue() === 2) {
@@ -213,7 +218,7 @@ function ScreenController () {
 
             endText.textContent = `This is a draw !`
             endDialog.showModal()
-        
+
         };
     };
 
@@ -224,8 +229,8 @@ function ScreenController () {
         const board = game.getBoard();
 
 
-        board.forEach((row,indexRow) => {
-            row.forEach((cell,indexColumn) => {
+        board.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) => {
 
                 const cellButton = document.createElement("button");
                 cellButton.classList.add("cell");
@@ -247,8 +252,8 @@ function ScreenController () {
 
     const updateScoreDisplay = () => {
 
-        display.innerHTML = `<p> ${game.getPlayers()[0].name}` + `<span style="color: red;"> X </span> : ` +  `${game.getPlayers()[0].score} </p>` +
-        `<p> ${game.getPlayers()[1].name}` + `<span style="color: blue;"> O </span> : ` + `${game.getPlayers()[1].score} </p>`;
+        display.innerHTML = `<p> ${game.getPlayers()[0].name}` + `<span style="color: red;"> X </span> : ` + `${game.getPlayers()[0].score} </p>` +
+            `<p> ${game.getPlayers()[1].name}` + `<span style="color: blue;"> O </span> : ` + `${game.getPlayers()[1].score} </p>`;
 
     };
 
@@ -259,9 +264,9 @@ function ScreenController () {
         const selectedRow = e.target.dataset.row;
         const selectedColumn = e.target.dataset.column;
 
-        if(!selectedColumn) return;
+        if (!selectedColumn || !selectedRow) return;
 
-        game.playRound(selectedRow,selectedColumn);
+        game.playRound(selectedRow, selectedColumn);
         updateBoard();
 
     };
@@ -270,51 +275,51 @@ function ScreenController () {
 
     // Dialog and side buttons handling 
 
-      const addPlayers = document.querySelector(".add-players");
-      const closeDialog = document.querySelector(".x");
-      const player1 = document.getElementById("player-1");
-      const player2 = document.getElementById("player-2");
-      const playersForm = document.querySelector(".players-form");
-      const display = document.querySelector(".display");
-      const reset = document.querySelector(".stop-game");
-      const endForm = document.querySelector(".end-form");
-      const dialog = document.getElementById("dialog");
-  
-      addPlayers.addEventListener("click", () => {
-          dialog.showModal();
-        });
-        
-      closeDialog.addEventListener("click", () => {
-          dialog.close();
-  
-          player1.value = "";
-          player2.value = "";
-  
-        });
-  
-      playersForm.addEventListener("submit", () => {
+    const addPlayers = document.querySelector(".add-players");
+    const closeDialog = document.querySelector(".x");
+    const player1 = document.getElementById("player-1");
+    const player2 = document.getElementById("player-2");
+    const playersForm = document.querySelector(".players-form");
+    const display = document.querySelector(".display");
+    const reset = document.querySelector(".stop-game");
+    const endForm = document.querySelector(".end-form");
+    const dialog = document.getElementById("dialog");
 
-        game.updatePlayersNames(player1.value,player2.value);
+    addPlayers.addEventListener("click", () => {
+        dialog.showModal();
+    });
+
+    closeDialog.addEventListener("click", () => {
+        dialog.close();
+
+        player1.value = "";
+        player2.value = "";
+
+    });
+
+    playersForm.addEventListener("submit", () => {
+
+        game.updatePlayersNames(player1.value, player2.value);
 
         updateScoreDisplay();
 
         updateBoard();
 
         gameBoard.style.background = "#306754";
-  
+
         player1.value = "";
         player2.value = "";
-  
-      });
 
-      reset.addEventListener("click", () => {
+    });
+
+    reset.addEventListener("click", () => {
 
         resetBoard();
         game.resetPlayersScores();
 
     });
 
-      endForm.addEventListener("submit",resetBoard);
+    endForm.addEventListener("submit", resetBoard);
 
 
 
