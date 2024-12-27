@@ -14,12 +14,10 @@
 
         <div class="buttons-container">
             <button class="add-players">Start Game</button>
-            <button class="stop-game">Stop Game</button>
+            <button class="stop-game">Reset Game</button>
         </div>
 
         <div class="display">
-
-            DISPLAY
 
         </div>
 
@@ -38,6 +36,7 @@
 
     <dialog id="dialog">
         <form class="players-form" action="" method="dialog">
+         <div class="start-text">Who is playing ?</div>   
          <div>
             <input type="text" id="player-1" name="player-1" placeholder="Player 1's name" required>
         </div>
@@ -51,6 +50,14 @@
         </div>
         </form>
     </dialog>
-    
+
+    <dialog id="dialog-end">
+        <form class="end-form" action="" method="dialog">
+        <div class="end-text"></div>
+        <div class="buttons-dialog">
+            <button type="submit">Play again ?</button>
+        </div>
+        </form>
+    </dialog>
 </body>
 </html>

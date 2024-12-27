@@ -1,3 +1,7 @@
+/* * {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} */
+
 body{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -5,22 +9,104 @@ body{
 
 .left-side{
     display: grid;
-    grid-template-rows: 10vh 10vh 1fr;
+    grid-template-rows: auto 10vh 1fr;
     justify-content: center;
+    color: #306754;
 }
 
+.left-side button, form button{
+    background-color: #306754;
+    color: white;
+    padding: 12px 0;
+    width: 100px;
+    border-radius: 20px;
+    border: 0px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.left-side h1{
+    justify-self: center;
+}
+
+.right-side{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 5px;
+    height: 100vh;
+}
 
 .game-board{
     display: grid;
-    grid-template-columns: minmax(50px,200px) minmax(50px,200px) minmax(50px,200px);
-    grid-template-rows: 25vh 25vh 25vh;/*minmax(50px,200px) minmax(50px,200px) minmax(50px,200px);*/
+    grid-template-columns: repeat(3,1fr); /*minmax(50px,200px) minmax(50px,200px) minmax(50px,200px); */
+    grid-template-rows: repeat(3,1fr); /*minmax(50px,200px) minmax(50px,200px) minmax(50px,200px);*/
     gap: 5px;
+    background-color: white;
+    margin-right: 5vw;
+    /* padding: 10px; */
+    height: 100%;
+    /* height: 80vh; */
 }
 
 .game-board > button{
-    justify-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    cursor: pointer;
+    border: 0;
+    font-size: min(10vw,10vh);
 }
 
 .text-content{
     padding: 16px 32px;
+    justify-self: center;
+    font-size: 32px;
+    color: #306754;
+    font-weight: bold;
+}
+
+dialog{
+    height: 50%;
+    width: 40%;
+    border: 2px solid black;
+    border-radius: 20px;
+    /* margin: 50px; */
+    margin-top: 200px;
+    font-size: 16px;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+
+input{
+    width: 20vw;
+    background-color: rgb(240, 237, 237);
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.buttons-dialog{
+    margin-top: 10px;
+}
+
+.end-text, .start-text{
+    justify-self: center;
+    font-size: 24px;
+    padding: 10px;
+    color: #306754;
+}
+
+.display{
+    font-size: 24px;
+    justify-self: center;
 }
