@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,48 @@
     <script src="assets/script.js" defer></script>
 </head>
 <body>
+    <div class="left-side">
+        <h1>TIC-TAC-TOE</h1>
+
+        <div class="buttons-container">
+            <button class="add-players">Start Game</button>
+            <button class="stop-game">Stop Game</button>
+        </div>
+
+        <div class="display">
+
+            DISPLAY
+
+        </div>
+
+    </div>
+    <div class="right-side">
+
+        <div class="text-content">
+
+        </div>
+        <div class="game-board">
+
+        </div>
+
+    </div>
+
+
+    <dialog id="dialog">
+        <form class="players-form" action="" method="dialog">
+         <div>
+            <input type="text" id="player-1" name="player-1" placeholder="Player 1's name" required>
+        </div>
+        <div>
+            <input type="text" id="player-2" name="player-2" placeholder="Player 2's name" required>
+        </div>
+
+        <div class="buttons-dialog">
+            <button type="submit">Add Players</button>
+            <button class="x">Cancel</button>
+        </div>
+        </form>
+    </dialog>
     
 </body>
 </html>

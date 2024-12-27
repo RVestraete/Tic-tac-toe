@@ -73,6 +73,13 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
 
+    const updatePlayersNames = (player1,player2) => {
+
+        players[0].name = player1;
+        players[1].name = player2;
+
+    };
+
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
@@ -119,13 +126,97 @@ function GameController(playerOne = "Player 1", playerTwo = "Player 2") {
 
     printNewRound();
 
-    return {playRound,getActivePlayer,getBoard: board.getBoard, getGameStatus, checkWinner};
+    return {playRound,getActivePlayer,getBoard: board.getBoard, getGameStatus, updatePlayersNames};
 
 };
 
 
-function SreenController () {
+function ScreenController () {
 
-}
+    // Game handling 
+    const game = GameController();
 
+    const textContent = document.querySelector(".text-content");
+    const gameBoard = document.querySelector(".game-board");
+
+    const updateBoard = () => {
+
+        gameBoard.textContent = "";
+
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        textContent.textContent = `${activePlayer.name}'s turn...`
+
+        board.forEach((row,indexRow) => {
+            row.forEach((cell,indexColumn) => {
+
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cell");
+
+
+                cellButton.dataset.row = indexRow;
+                cellButton.dataset.column = indexColumn;
+                cellButton.textContent = cell.getValue();
+
+                gameBoard.appendChild(cellButton);
+
+            });
+        });
+    };
+
+    // Handling of the clicks on board buttons
+    function clickHandlerBoard(e) {
+
+        const selectedRow = e.target.dataset.row;
+        const selectedColumn = e.target.dataset.column;
+
+        if(!selectedColumn) return;
+
+        game.playRound(selectedRow,selectedColumn);
+        updateBoard();
+
+    };
+
+    gameBoard.addEventListener("click", clickHandlerBoard);
+
+    updateBoard();
+
+
+      // Dialog handling 
+
+      const addPlayers = document.querySelector(".add-players");
+      const closeDialog = document.querySelector(".x");
+      const player1 = document.getElementById("player-1");
+      const player2 = document.getElementById("player-2");
+      const playersForm = document.querySelector(".players-form");
+  
+      addPlayers.addEventListener("click", () => {
+          dialog.showModal();
+        });
+        
+      closeDialog.addEventListener("click", () => {
+          dialog.close();
+  
+          player1.value = "";
+          player2.value = "";
+  
+        });
+  
+      playersForm.addEventListener("submit", () => {
+
+        game.updatePlayersNames(player1.value,player2.value);
+
+        updateBoard();
+  
+          player1.value = "";
+          player2.value = "";
+  
+      });
+
+
+};
+
+
+ScreenController();
 

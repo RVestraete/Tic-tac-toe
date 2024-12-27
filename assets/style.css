@@ -1,0 +1,26 @@
+body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.left-side{
+    display: grid;
+    grid-template-rows: 10vh 10vh 1fr;
+    justify-content: center;
+}
+
+
+.game-board{
+    display: grid;
+    grid-template-columns: minmax(50px,200px) minmax(50px,200px) minmax(50px,200px);
+    grid-template-rows: 25vh 25vh 25vh;/*minmax(50px,200px) minmax(50px,200px) minmax(50px,200px);*/
+    gap: 5px;
+}
+
+.game-board > button{
+    justify-self: stretch;
+}
+
+.text-content{
+    padding: 16px 32px;
+}
